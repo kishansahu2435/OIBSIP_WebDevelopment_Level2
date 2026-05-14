@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Authentication | Oasis Infobyte</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="auth-wrap">
+    <section class="auth-card">
+      <div class="brand-box">
+        <p class="badge">Oasis Infobyte • Level 2 Task 3</p>
+        <h1>Login Authentication</h1>
+        <p class="muted">Secure register, login, and dashboard access using HTML, CSS, and JavaScript.</p>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="login">Login</button>
+        <button class="tab" data-tab="register">Register</button>
+      </div>
+
+      <form id="loginForm" class="form active-form">
+        <input type="email" id="loginEmail" placeholder="Email address" required />
+        <input type="password" id="loginPassword" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
+
+      <form id="registerForm" class="form">
+        <input type="text" id="name" placeholder="Full name" required />
+        <input type="email" id="email" placeholder="Email address" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <button type="submit">Register</button>
+      </form>
+
+      <p id="msg" class="message"></p>
+    </section>
+
+    <section id="dashboard" class="dashboard hidden">
+      <div class="dash-header">
+        <div>
+          <p class="badge">Secured Page</p>
+          <h2>Welcome, <span id="userName">User</span></h2>
+        </div>
+        <button id="logoutBtn">Logout</button>
+      </div>
+
+      <div class="dash-grid">
+        <div class="glass panel">
+          <h3>Profile</h3>
+          <p><strong>Email:</strong> <span id="userEmail">--</span></p>
+          <p><strong>Status:</strong> Authenticated</p>
+        </div>
+        <div class="glass panel">
+          <h3>Access Granted</h3>
+          <p>You have successfully logged in to a secured dashboard page.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
