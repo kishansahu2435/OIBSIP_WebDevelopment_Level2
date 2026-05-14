@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TaskFlow &mdash; To-Do App | OIB-SIP Level 2 Task 3</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- Background orbs -->
+  <div class="bg-orb bg-orb--1"></div>
+  <div class="bg-orb bg-orb--2"></div>
+  <div class="bg-orb bg-orb--3"></div>
+
+  <div class="app">
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="sidebar">
+      <div class="sidebar__brand">
+        <div class="sidebar__logo">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="sidebar__name">TaskFlow</span>
+      </div>
+
+      <nav class="sidebar__nav">
+        <button class="sidebar__link active" data-filter="all">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          All Tasks
+          <span class="sidebar__count" id="countAll">0</span>
+        </button>
+        <button class="sidebar__link" data-filter="pending">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Pending
+          <span class="sidebar__count" id="countPending">0</span>
+        </button>
+        <button class="sidebar__link" data-filter="completed">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Completed
+          <span class="sidebar__count" id="countCompleted">0</span>
+        </button>
+      </nav>
+
+      <div class="sidebar__categories">
+        <div class="sidebar__cat-label">Priority</div>
+        <button class="sidebar__link" data-filter="high">
+          <span class="dot dot--high"></span> High
+        </button>
+        <button class="sidebar__link" data-filter="medium">
+          <span class="dot dot--medium"></span> Medium
+        </button>
+        <button class="sidebar__link" data-filter="low">
+          <span class="dot dot--low"></span> Low
+        </button>
+      </div>
+
+      <div class="sidebar__footer">
+        <div class="sidebar__progress-label">
+          <span>Today&rsquo;s Progress</span>
+          <span id="progressPct">0%</span>
+        </div>
+        <div class="sidebar__progress-bar">
+          <div class="sidebar__progress-fill" id="progressFill"></div>
+        </div>
+        <div class="sidebar__date" id="sidebarDate"></div>
+      </div>
+    </aside>
+
+    <!-- ── MAIN ── -->
+    <main class="main">
+
+      <!-- Header -->
+      <header class="main__header">
+        <div class="main__header-left">
+          <h1 class="main__title" id="mainTitle">All Tasks</h1>
+          <p class="main__subtitle" id="mainSubtitle">Manage everything in one place</p>
+        </div>
+        <div class="main__header-right">
+          <div class="search-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="searchInput" placeholder="Search tasks&hellip;" class="search-input"/>
+          </div>
+          <button class="btn-menu" id="mobileMenuBtn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Add Task Form -->
+      <div class="add-card">
+        <div class="add-card__icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        <div class="add-card__fields">
+          <input type="text" id="taskInput" class="add-card__input" placeholder="Add a new task&hellip;" maxlength="120"/>
+          <div class="add-card__row">
+            <select id="prioritySelect" class="add-card__select">
+              <option value="medium">&#128997; Medium</option>
+              <option value="high">&#128308; High</option>
+              <option value="low">&#128994; Low</option>
+            </select>
+            <select id="categorySelect" class="add-card__select">
+              <option value="General">&#128221; General</option>
+              <option value="Work">&#128188; Work</option>
+              <option value="Personal">&#128100; Personal</option>
+              <option value="Study">&#128218; Study</option>
+              <option value="Health">&#128170; Health</option>
+            </select>
+            <input type="datetime-local" id="dueDateInput" class="add-card__date"/>
+            <button class="btn-add" id="addBtn">Add Task</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats strip -->
+      <div class="stats-strip">
+        <div class="stat">
+          <div class="stat__num" id="statTotal">0</div>
+          <div class="stat__label">Total</div>
+        </div>
+        <div class="stat stat--pending">
+          <div class="stat__num" id="statPending">0</div>
+          <div class="stat__label">Pending</div>
+        </div>
+        <div class="stat stat--done">
+          <div class="stat__num" id="statDone">0</div>
+          <div class="stat__label">Completed</div>
+        </div>
+        <div class="stat stat--high">
+          <div class="stat__num" id="statHigh">0</div>
+          <div class="stat__label">High Priority</div>
+        </div>
+      </div>
+
+      <!-- Sort bar -->
+      <div class="sort-bar">
+        <span class="sort-bar__label">Sort by:</span>
+        <button class="sort-btn active" data-sort="date">Date Added</button>
+        <button class="sort-btn" data-sort="priority">Priority</button>
+        <button class="sort-btn" data-sort="due">Due Date</button>
+        <button class="sort-btn" data-sort="alpha">A &rarr; Z</button>
+        <button class="sort-bar__clear" id="clearCompleted">Clear Completed</button>
+      </div>
+
+      <!-- Task lists -->
+      <div class="lists-wrap">
+
+        <!-- Pending -->
+        <div class="list-section" id="pendingSection">
+          <div class="list-section__header">
+            <span class="list-section__title">
+              <span class="dot dot--pending"></span> Pending Tasks
+            </span>
+            <span class="list-section__badge" id="pendingBadge">0</span>
+          </div>
+          <div class="task-list" id="pendingList">
+            <div class="empty-state" id="pendingEmpty">
+              <div class="empty-state__icon">&#9996;&#65039;</div>
+              <div class="empty-state__text">No pending tasks. Add one above!</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Completed -->
+        <div class="list-section" id="completedSection">
+          <div class="list-section__header">
+            <span class="list-section__title">
+              <span class="dot dot--done"></span> Completed Tasks
+            </span>
+            <span class="list-section__badge list-section__badge--done" id="completedBadge">0</span>
+          </div>
+          <div class="task-list" id="completedList">
+            <div class="empty-state" id="completedEmpty">
+              <div class="empty-state__icon">&#127942;</div>
+              <div class="empty-state__text">Complete a task to see it here!</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ── EDIT MODAL ── -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <div class="modal__header">
+        <h2 class="modal__title">Edit Task</h2>
+        <button class="modal__close" id="modalClose">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <div class="form-field">
+          <label class="form-label">Task Name</label>
+          <input type="text" id="editInput" class="form-input" maxlength="120"/>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label">Priority</label>
+            <select id="editPriority" class="form-select">
+              <option value="high">&#128308; High</option>
+              <option value="medium">&#128997; Medium</option>
+              <option value="low">&#128994; Low</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Category</label>
+            <select id="editCategory" class="form-select">
+              <option value="General">&#128221; General</option>
+              <option value="Work">&#128188; Work</option>
+              <option value="Personal">&#128100; Personal</option>
+              <option value="Study">&#128218; Study</option>
+              <option value="Health">&#128170; Health</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Due Date &amp; Time</label>
+          <input type="datetime-local" id="editDue" class="form-input"/>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Notes</label>
+          <textarea id="editNotes" class="form-textarea" placeholder="Add notes&hellip;" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-cancel" id="modalCancel">Cancel</button>
+        <button class="btn-save" id="modalSave">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
